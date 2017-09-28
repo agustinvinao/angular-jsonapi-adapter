@@ -26,3 +26,4 @@ Desktop.ini
 
 /coverage
 node_modules/*
+compiled/*
