@@ -6,10 +6,11 @@ import { JsonApiModel } from '../../src/models/json-api.model';
 import { Attribute } from '../../src/decorators/attribute.decorator';
 import { HasMany } from '../../src/decorators/has-many.decorator';
 import { HasOne } from '../../src/decorators/has-one.decorator';
-import {PageMetaData} from "./page-meta-data";
+import {PageMetaData} from './page-meta-data';
 
 @JsonApiModelConfig({
     type: 'editorials',
+    type_one: 'editorial',
     meta: PageMetaData
 })
 export class Editorial extends JsonApiModel {
@@ -27,7 +28,7 @@ export class Editorial extends JsonApiModel {
     books: Book[];
 
     @HasOne()
-    author: Author;
+    authors: Author;
 
     @HasOne()
     chapter: Chapter;

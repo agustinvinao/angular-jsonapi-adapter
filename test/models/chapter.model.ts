@@ -5,7 +5,8 @@ import { Attribute } from '../../src/decorators/attribute.decorator';
 import { BelongsTo } from '../../src/decorators/belongs-to.decorator';
 
 @JsonApiModelConfig({
-    type: 'chapters'
+    type: 'chapters',
+    type_one: 'chapter'
 })
 export class Chapter extends JsonApiModel {
 

@@ -1,5 +1,5 @@
-export const EDITORIAL_ID = '1';
-export const EDITORIAL_NAME = 'Editorial example';
+export const EDITORIAL_ID = '29';
+export const EDITORIAL_NAME = 'Ziemann and Sons';
 export const EDITORIAL_CREATED = '2016-09-26T21:12:40Z';
 export const EDITORIAL_UPDATED = '2016-09-26T21:12:45Z';
 
@@ -9,26 +9,26 @@ export function getEditorialData(relationship?: string, total?: number): any {
   let response: any = {
     'id': EDITORIAL_ID,
     'type': 'editorials',
+    'links': {
+      'self': '/editorials/' + EDITORIAL_ID
+    },
     'attributes': {
       'name': EDITORIAL_NAME,
-      'created_at': EDITORIAL_CREATED,
-      'updated_at': EDITORIAL_UPDATED
+      'updated_at': '2017-09-29T19:38:25.616Z',
+      'created_at': '2017-09-29T19:38:25.616Z'
     },
     'relationships': {
-      'books': {'links': {'self': '/v1/authors/1/relationships/books', 'related': '/v1/authors/1/books'}},
-      'author': {
+      'authors': {
         'links': {
-          'self': '/v1/editorials/1/relationships/author',
-          'related': '/v1/editorials/1/author'
+          'self': '/editorials/' + EDITORIAL_ID + '/relationships/authors',
+          'related': '/editorials/' + EDITORIAL_ID + '/authors'
         },
         'data': {
           'id': AUTHOR_ID,
-          'name': AUTHOR_NAME,
           'type': 'authors'
         }
       }
-    },
-    'links': {'self': '/v1/editorials/1'}
+    }
   };
   if (relationship && relationship.indexOf('author') !== -1) {
     response.relationships.author.data = {
@@ -43,7 +43,7 @@ export function getEditorialIncluded() {
   return {
     'id': EDITORIAL_ID,
     'type': 'editorials',
-    'links': { 'self': '/v1/editorials/1' },
+    'links': { 'self': '/v1/editorials/' + EDITORIAL_ID },
     'attributes': {
       'name': EDITORIAL_NAME,
       'created_at': EDITORIAL_CREATED,
@@ -52,8 +52,8 @@ export function getEditorialIncluded() {
     'relationships': {
       'author': {
         'links': {
-          'self': '/v1/editorials/1/relationships/author',
-          'related': '/v1/editorials/1/author'
+          'self': '/v1/editorials/' + EDITORIAL_ID + '/relationships/authors',
+          'related': '/v1/editorials/' + EDITORIAL_ID + '/authors'
         }
       }
     }

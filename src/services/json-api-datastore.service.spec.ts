@@ -14,7 +14,8 @@ import {AUTHOR_BIRTH,
         AUTHOR_NAME,
         BOOK_TITLE,
         getAuthorData,
-        getAuthorIncluded} from '../../test/fixtures/author.fixture';
+        getAuthorIncluded,
+        getAuthorsForEditorial} from '../../test/fixtures/author.fixture';
 import {
     BaseRequestOptions,
     ConnectionBackend,
@@ -55,10 +56,26 @@ describe('JsonApiDatastore', () => {
         httpMock    = TestBed.get(HttpTestingController);
         datastore   = TestBed.get(Datastore);
     });
+    describe('query related', () => {
+        it('should get ralated models', () => {
+            datastore.findAllRelated(Editorial, EDITORIAL_ID, Author)
+            .subscribe((document) => {
+                expect(document).toBeDefined();
+                expect(document.getModels().length).toEqual(7);
+            });
 
+            const req = httpMock.expectOne(BASE_URL + 'editorials/' + EDITORIAL_ID + '/authors');
+            expect(req.request.method).toEqual('GET');
+            expect(req.request.url).toEqual(BASE_URL + 'editorials/' + EDITORIAL_ID + '/authors');
+            req.flush({
+                data: getAuthorsForEditorial()
+            });
+            httpMock.verify();
+        });
+    });
 
     describe('query', () => {
-        fit('should build basic url', () => {
+        it('should build basic url', () => {
             datastore.query(Author).subscribe(response => expect(response[0] instanceof Author).toBeTruthy());
             const req = httpMock.expectOne(BASE_URL + 'authors');
             expect(req.request.method).toEqual('GET');
@@ -263,13 +280,13 @@ describe('JsonApiDatastore', () => {
         });
 
         it('should get editorial with hasOne relation author', () => {
-            datastore.findRecord(Editorial, '1').subscribe((editorial) => {
-                console.log('%c editorial: ', 'background-color: red; color: white;', editorial);
+            datastore.findRecord(Editorial, EDITORIAL_ID).subscribe((editorial) => {
+                // console.log('%c editorial: ', 'background-color: red; color: white;', editorial);
                 expect(editorial).toBeDefined();
-                expect(editorial.author).toBeDefined();
+                expect(editorial.authors).toBeDefined();
             });
 
-            const req = httpMock.expectOne(BASE_URL + 'editorials/1');
+            const req = httpMock.expectOne(BASE_URL + 'editorials/' + EDITORIAL_ID);
             req.flush({
                 data: getEditorialData(),
                 included: [

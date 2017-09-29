@@ -7,7 +7,8 @@ import { HasMany } from '../../src/decorators/has-many.decorator';
 import { BelongsTo } from '../../src/decorators/belongs-to.decorator';
 
 @JsonApiModelConfig({
-    type: 'books'
+    type: 'books',
+    type_one: 'book'
 })
 export class Book extends JsonApiModel {
 
