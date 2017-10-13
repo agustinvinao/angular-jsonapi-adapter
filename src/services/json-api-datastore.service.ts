@@ -193,12 +193,14 @@ export class JsonApiDatastore {
         res: any,
         modelType: ModelType<T>,
         withMeta = false,
-        relatedModelType?: ModelType<any>
+        relatedModelType?: ModelType<any>,
+        relatedModelTypeSingle?: boolean
         ): T[] | JsonApiQueryData<T> {
             let body: any = res;
             let models: T[] = [];
             let model: T;
-            body.data.map((_data: any) => {
+            if (relatedModelTypeSingle) {
+                const _data = body.data;
                 model = relatedModelType ? new relatedModelType(this, _data) : new modelType(this, _data);
                 this.addToStore(model);
                 if (body.included) {
@@ -206,7 +208,17 @@ export class JsonApiDatastore {
                     this.addToStore(model);
                 }
                 models.push(model);
-            });
+            } else {
+                body.data.map((_data: any) => {
+                    model = relatedModelType ? new relatedModelType(this, _data) : new modelType(this, _data);
+                    this.addToStore(model);
+                    if (body.included) {
+                        model.syncRelationships(_data, body.included, 0);
+                        this.addToStore(model);
+                    }
+                    models.push(model);
+                });
+            }
             if (withMeta && withMeta === true) {
                 return new JsonApiQueryData(models, this.parseMeta(body, modelType));
             } else {

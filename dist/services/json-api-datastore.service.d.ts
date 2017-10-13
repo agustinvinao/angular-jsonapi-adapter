@@ -32,7 +32,7 @@ export declare class JsonApiDatastore {
     private isValidToManyRelation(objects);
     private isValidToOneRelation(objects);
     private buildSingleRelationshipData(model);
-    private extractQueryData<T>(res, modelType, withMeta?, relatedModelType?);
+    private extractQueryData<T>(res, modelType, withMeta?, relatedModelType?, relatedModelTypeSingle?);
     private extractRecordData<T>(res, modelType, model?);
     protected parseMeta(body: any, modelType: ModelType<JsonApiModel>): any;
     private buildHeaders(customHeaders);

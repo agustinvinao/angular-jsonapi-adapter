@@ -1,6 +1,6 @@
 {
   "name": "angular-jsonapi-adapter",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "angular2/4 JSONAPI adapter. It is responsible for transforming the store's requests into HTTP requests that follow the JSON API format.",
   "scripts": {
     "build": "rimraf dist src/compiled && tslint src/**/*.ts && ngc",

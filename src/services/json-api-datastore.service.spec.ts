@@ -14,6 +14,7 @@ import {
     Director
 } from '../../test/models/director.model';
 import {
+    DIRECTOR_NAME,
     getDirectorForEditorial
 } from '../../test/fixtures/director.fixture';
 import {
@@ -105,6 +106,7 @@ describe('JsonApiDatastore', () => {
                 .subscribe((document) => {
                     expect(document).toBeDefined();
                     expect(document.getModels().length).toEqual(1);
+                    expect(document.getModels()[0]['name']).toEqual(DIRECTOR_NAME);
                 });
 
             const req = httpMock.expectOne(BASE_URL + 'editorials/' + EDITORIAL_ID + '/director');
