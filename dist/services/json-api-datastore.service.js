@@ -170,21 +170,32 @@ var JsonApiDatastore = /** @class */ (function () {
         }
         return relationShipData;
     };
-    JsonApiDatastore.prototype.extractQueryData = function (res, modelType, withMeta, relatedModelType) {
+    JsonApiDatastore.prototype.extractQueryData = function (res, modelType, withMeta, relatedModelType, relatedModelSingle) {
         var _this = this;
         if (withMeta === void 0) { withMeta = false; }
         var body = res;
         var models = [];
         var model;
-        body.data.map(function (_data) {
-            model = relatedModelType ? new relatedModelType(_this, _data) : new modelType(_this, _data);
-            _this.addToStore(model);
+        if (relatedModelSingle) {
+            model = relatedModelType ? new relatedModelType(this, body.data) : new modelType(this, body.data);
+            this.addToStore(model);
             if (body.included) {
-                model.syncRelationships(_data, body.included, 0);
-                _this.addToStore(model);
+                model.syncRelationships(body.data, body.included, 0);
+                this.addToStore(model);
             }
             models.push(model);
-        });
+        }
+        else {
+            body.data.map(function (_data) {
+                model = relatedModelType ? new relatedModelType(_this, _data) : new modelType(_this, _data);
+                _this.addToStore(model);
+                if (body.included) {
+                    model.syncRelationships(_data, body.included, 0);
+                    _this.addToStore(model);
+                }
+                models.push(model);
+            });
+        }
         if (withMeta && withMeta === true) {
             return new json_api_query_data_1.JsonApiQueryData(models, this.parseMeta(body, modelType));
         }
