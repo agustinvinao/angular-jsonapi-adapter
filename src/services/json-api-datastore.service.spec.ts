@@ -106,6 +106,7 @@ describe('JsonApiDatastore', () => {
                 .subscribe((document) => {
                     expect(document).toBeDefined();
                     expect(document.getModels().length).toEqual(1);
+                    console.log('document.getModels(): ', document.getModels())
                     expect(document.getModels()[0]['name']).toEqual(DIRECTOR_NAME);
                 });
                 // TODO: Is not testing the data parsing with extractQueryData inside the method
