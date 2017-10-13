@@ -42,7 +42,7 @@ export class JsonApiDatastore {
             const customHeadhers: HttpHeaders = this.buildHeaders(headers);
             let url: string = this.buildUrl(modelType, params, id, relatedModelType, false);
             return this.httpClient.get(url, {headers: customHeadhers})
-                .map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType))
+                .map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType, false))
                 .catch((res: any) => this.handleError(res));
     }
 
@@ -56,7 +56,7 @@ export class JsonApiDatastore {
         const customHeadhers: HttpHeaders = this.buildHeaders(headers);
         let url: string = this.buildUrl(modelType, params, id, relatedModelType, true);
         return this.httpClient.get(url, {headers: customHeadhers})
-            .map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType))
+            .map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType, true))
             .catch((res: any) => this.handleError(res));
     }
 

@@ -30,7 +30,7 @@ var JsonApiDatastore = /** @class */ (function () {
         var customHeadhers = this.buildHeaders(headers);
         var url = this.buildUrl(modelType, params, id, relatedModelType, false);
         return this.httpClient.get(url, { headers: customHeadhers })
-            .map(function (res) { return _this.extractQueryData(res, modelType, true, relatedModelType); })
+            .map(function (res) { return _this.extractQueryData(res, modelType, true, relatedModelType, false); })
             .catch(function (res) { return _this.handleError(res); });
     };
     JsonApiDatastore.prototype.findOneRelated = function (modelType, id, relatedModelType, params, headers) {
@@ -38,7 +38,7 @@ var JsonApiDatastore = /** @class */ (function () {
         var customHeadhers = this.buildHeaders(headers);
         var url = this.buildUrl(modelType, params, id, relatedModelType, true);
         return this.httpClient.get(url, { headers: customHeadhers })
-            .map(function (res) { return _this.extractQueryData(res, modelType, true, relatedModelType); })
+            .map(function (res) { return _this.extractQueryData(res, modelType, true, relatedModelType, true); })
             .catch(function (res) { return _this.handleError(res); });
     };
     JsonApiDatastore.prototype.findAll = function (modelType, params, headers) {

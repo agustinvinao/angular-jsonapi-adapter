@@ -108,6 +108,7 @@ describe('JsonApiDatastore', () => {
                     expect(document.getModels().length).toEqual(1);
                     expect(document.getModels()[0]['name']).toEqual(DIRECTOR_NAME);
                 });
+                // TODO: Is not testing the data parsing with extractQueryData inside the method
 
             const req = httpMock.expectOne(BASE_URL + 'editorials/' + EDITORIAL_ID + '/director');
             expect(req.request.method).toEqual('GET');
