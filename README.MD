@@ -17,7 +17,8 @@ A lightweight Angular 2/4 adapter for [JSON API](http://jsonapi.org/)
     - [Finding Records](#finding-records)
         - [Querying for Multiple Records](#querying-for-multiple-records)
         - [Retrieving a Single Record](#retrieving-a-single-record)
-        - [Querying for Relared Records](#retrieving-related-records)
+        - [Querying for ToMany Related Records](#retrieving-tomany-related-records)
+        - [Querying for ToOne Related Record](#retrieving-toone-related-record)
     - [Creating, Updating and Deleting](#creating-updating-and-deleting)
         - [Creating Records](#creating-records)
         - [Updating Records](#updating-records)
@@ -214,9 +215,9 @@ Use `peekRecord()` to retrieve a record by its type and ID, without making a net
 let post = this.datastore.peekRecord(Post, '1');
 ```
 
-#### Querying for Related Records
+#### Querying for ToMany Related Records
 
-Now, you can use your `Datastore` in order to query your API with the `findAllRelated()` method:
+Now, you can use your `Datastore` in order to query your API with the `findManyRelated()` method:
 - The first argument is the type of object you want to query.
 - The second argument is the list of params: write them in JSON format and they will be serialized.
 - The third argument is the model of the related resource to retrive.
@@ -226,7 +227,7 @@ Now, you can use your `Datastore` in order to query your API with the `findAllRe
 constructor(private datastore: Datastore) { }
 
 getPosts(){
-    this.datastore.query(
+    this.datastore.findManyRelated(
         Post,
         {
             page: { size: 10, number: 1}
@@ -234,6 +235,36 @@ getPosts(){
         Comment
     ).subscribe(
         (comments: Comment[]) => console.log(comments)
+    );
+}
+```
+
+Use `peekAll()` to retrieve all of the records for a given type that are already loaded into the store, without making a network request:
+
+```typescript
+let posts = this.datastore.peekAll(Post);
+```
+
+#### Querying for ToOne Related Record
+
+Now, you can use your `Datastore` in order to query your API with the `findOneRelated()` method:
+- The first argument is the type of object you want to query.
+- The second argument is the list of params: write them in JSON format and they will be serialized.
+- The third argument is the model of the related resource to retrive.
+- The returned value is a document which gives access to the metdata and the models.
+```typescript
+// ...
+constructor(private datastore: Datastore) { }
+
+getPosts(){
+    this.datastore.findManyRelated(
+        Post,
+        {
+            page: { size: 10, number: 1}
+        },
+        Comment
+    ).subscribe(
+        (comment: Comment) => console.log(comment)
     );
 }
 ```

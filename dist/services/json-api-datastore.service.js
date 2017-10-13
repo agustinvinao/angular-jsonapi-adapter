@@ -25,6 +25,22 @@ var JsonApiDatastore = /** @class */ (function () {
             .map(function (res) { return _this.extractQueryData(res, modelType); })
             .catch(function (res) { return _this.handleError(res); });
     };
+    JsonApiDatastore.prototype.findManyRelated = function (modelType, id, relatedModelType, params, headers) {
+        var _this = this;
+        var customHeadhers = this.buildHeaders(headers);
+        var url = this.buildUrl(modelType, params, id, relatedModelType, false);
+        return this.httpClient.get(url, { headers: customHeadhers })
+            .map(function (res) { return _this.extractQueryData(res, modelType, true, relatedModelType); })
+            .catch(function (res) { return _this.handleError(res); });
+    };
+    JsonApiDatastore.prototype.findOneRelated = function (modelType, id, relatedModelType, params, headers) {
+        var _this = this;
+        var customHeadhers = this.buildHeaders(headers);
+        var url = this.buildUrl(modelType, params, id, relatedModelType, true);
+        return this.httpClient.get(url, { headers: customHeadhers })
+            .map(function (res) { return _this.extractQueryData(res, modelType, true, relatedModelType); })
+            .catch(function (res) { return _this.handleError(res); });
+    };
     JsonApiDatastore.prototype.findAll = function (modelType, params, headers) {
         var _this = this;
         var customHeadhers = this.buildHeaders(headers);
@@ -154,14 +170,14 @@ var JsonApiDatastore = /** @class */ (function () {
         }
         return relationShipData;
     };
-    JsonApiDatastore.prototype.extractQueryData = function (res, modelType, withMeta) {
+    JsonApiDatastore.prototype.extractQueryData = function (res, modelType, withMeta, relatedModelType) {
         var _this = this;
         if (withMeta === void 0) { withMeta = false; }
         var body = res;
         var models = [];
         var model;
         body.data.map(function (_data) {
-            model = new modelType(_this, _data);
+            model = relatedModelType ? new relatedModelType(_this, _data) : new modelType(_this, _data);
             _this.addToStore(model);
             if (body.included) {
                 model.syncRelationships(_data, body.included, 0);
@@ -268,11 +284,20 @@ var JsonApiDatastore = /** @class */ (function () {
         return model;
     };
     ;
-    JsonApiDatastore.prototype.buildUrl = function (modelType, params, id) {
+    JsonApiDatastore.prototype.buildUrl = function (modelType, params, id, modelTypeRelated, modelTypeRelatedSingle) {
         var typeName = Reflect.getMetadata('JsonApiModelConfig', modelType).type;
         var baseUrl = Reflect.getMetadata('JsonApiDatastoreConfig', this.constructor).baseUrl;
         var idToken = id ? "/" + id : null;
-        return [baseUrl, typeName, idToken, (params ? '?' : ''), this.toQueryString(params)].join('');
+        var typeNameRelated;
+        if (modelTypeRelated) {
+            if (modelTypeRelatedSingle) {
+                typeNameRelated = Reflect.getMetadata('JsonApiModelConfig', modelTypeRelated).type_one;
+            }
+            else {
+                typeNameRelated = Reflect.getMetadata('JsonApiModelConfig', modelTypeRelated).type;
+            }
+        }
+        return [baseUrl, typeName, idToken, (modelTypeRelated ? '/' + typeNameRelated : ''), (params ? '?' : ''), this.toQueryString(params)].join('');
     };
     JsonApiDatastore.prototype.handleError = function (error) {
         var errMsg = (error.message) ? error.message :

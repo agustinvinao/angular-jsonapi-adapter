@@ -32,7 +32,21 @@ export class JsonApiDatastore {
             .catch((res: any) => this.handleError(res));
     }
 
-    findAllRelated<T extends JsonApiModel>(
+    findManyRelated<T extends JsonApiModel>(
+            modelType: ModelType<T>,
+            id: string,
+            relatedModelType: ModelType<any>,
+            params?: any,
+            headers?: HttpHeaders
+        ): Observable<JsonApiQueryData<T>> {
+            const customHeadhers: HttpHeaders = this.buildHeaders(headers);
+            let url: string = this.buildUrl(modelType, params, id, relatedModelType, false);
+            return this.httpClient.get(url, {headers: customHeadhers})
+                .map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType))
+                .catch((res: any) => this.handleError(res));
+    }
+
+    findOneRelated<T extends JsonApiModel>(
         modelType: ModelType<T>,
         id: string,
         relatedModelType: ModelType<any>,
@@ -40,7 +54,7 @@ export class JsonApiDatastore {
         headers?: HttpHeaders
     ): Observable<JsonApiQueryData<T>> {
         const customHeadhers: HttpHeaders = this.buildHeaders(headers);
-        let url: string = this.buildUrl(modelType, params, id, relatedModelType);
+        let url: string = this.buildUrl(modelType, params, id, relatedModelType, true);
         return this.httpClient.get(url, {headers: customHeadhers})
             .map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType))
             .catch((res: any) => this.handleError(res));
@@ -180,24 +194,24 @@ export class JsonApiDatastore {
         modelType: ModelType<T>,
         withMeta = false,
         relatedModelType?: ModelType<any>
-    ): T[] | JsonApiQueryData<T> {
-        let body: any = res;
-        let models: T[] = [];
-        let model: T;
-        body.data.map((_data: any) => {
-            model = relatedModelType ? new relatedModelType(this, _data) : new modelType(this, _data);
-            this.addToStore(model);
-            if (body.included) {
-                model.syncRelationships(_data, body.included, 0);
+        ): T[] | JsonApiQueryData<T> {
+            let body: any = res;
+            let models: T[] = [];
+            let model: T;
+            body.data.map((_data: any) => {
+                model = relatedModelType ? new relatedModelType(this, _data) : new modelType(this, _data);
                 this.addToStore(model);
+                if (body.included) {
+                    model.syncRelationships(_data, body.included, 0);
+                    this.addToStore(model);
+                }
+                models.push(model);
+            });
+            if (withMeta && withMeta === true) {
+                return new JsonApiQueryData(models, this.parseMeta(body, modelType));
+            } else {
+                return models;
             }
-            models.push(model);
-        });
-        if (withMeta && withMeta === true) {
-            return new JsonApiQueryData(models, this.parseMeta(body, modelType));
-        } else {
-            return models;
-        }
     }
 
     private extractRecordData<T extends JsonApiModel>(res: any, modelType: ModelType<T>, model?: T): T {
@@ -299,15 +313,25 @@ export class JsonApiDatastore {
         return model;
     };
 
-    private buildUrl<T extends JsonApiModel>(modelType: ModelType<T>, params?: any, id?: string, modelTypeRelated?: any): string {
-        let typeName: string = Reflect.getMetadata('JsonApiModelConfig', modelType).type;
-        let baseUrl: string = Reflect.getMetadata('JsonApiDatastoreConfig', this.constructor).baseUrl;
-        let idToken: string = id ? `/${id}` : null;
-        let typeOneNameRelated: string;
-        if (modelTypeRelated) {
-            typeOneNameRelated = Reflect.getMetadata('JsonApiModelConfig', modelTypeRelated).type;
-        }
-        return [baseUrl, typeName, idToken, (modelTypeRelated ? '/' + typeOneNameRelated : ''), (params ? '?' : ''), this.toQueryString(params)].join('');
+    private buildUrl<T extends JsonApiModel>(
+        modelType: ModelType<T>,
+        params?: any,
+        id?: string,
+        modelTypeRelated?: any,
+        modelTypeRelatedSingle?: boolean
+        ): string {
+            let typeName: string = Reflect.getMetadata('JsonApiModelConfig', modelType).type;
+            let baseUrl: string = Reflect.getMetadata('JsonApiDatastoreConfig', this.constructor).baseUrl;
+            let idToken: string = id ? `/${id}` : null;
+            let typeNameRelated: string;
+            if (modelTypeRelated) {
+                if (modelTypeRelatedSingle) {
+                    typeNameRelated = Reflect.getMetadata('JsonApiModelConfig', modelTypeRelated).type_one;
+                } else {
+                    typeNameRelated = Reflect.getMetadata('JsonApiModelConfig', modelTypeRelated).type;
+                }
+            }
+            return [baseUrl, typeName, idToken, (modelTypeRelated ? '/' + typeNameRelated : ''), (params ? '?' : ''), this.toQueryString(params)].join('');
     }
 
     protected handleError(error: any): ErrorObservable {

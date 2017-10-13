@@ -1,5 +1,6 @@
 import { Book } from './book.model';
 import { Author } from './author.model';
+import { Director } from './director.model';
 import { Chapter } from './chapter.model';
 import { JsonApiModelConfig } from '../../src/decorators/json-api-model-config.decorator';
 import { JsonApiModel } from '../../src/models/json-api.model';
@@ -32,4 +33,7 @@ export class Editorial extends JsonApiModel {
 
     @HasOne()
     chapter: Chapter;
+
+    @HasOne()
+    director: Director;
 }

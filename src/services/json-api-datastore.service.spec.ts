@@ -1,21 +1,33 @@
 import {TestBed} from '@angular/core/testing';
 import * as dateParse from 'date-fns/parse';
 import * as qs from 'qs';
-import {Editorial} from '../../test/models/editorial.model';
+import {
+    Editorial
+} from '../../test/models/editorial.model';
 import {
     EDITORIAL_NAME,
     EDITORIAL_ID,
     getEditorialIncluded,
     getEditorialData
 } from '../../test/fixtures/editorial.fixture';
-import {Author} from '../../test/models/author.model';
-import {AUTHOR_BIRTH,
-        AUTHOR_ID,
-        AUTHOR_NAME,
-        BOOK_TITLE,
-        getAuthorData,
-        getAuthorIncluded,
-        getAuthorsForEditorial} from '../../test/fixtures/author.fixture';
+import {
+    Director
+} from '../../test/models/director.model';
+import {
+    getDirectorForEditorial
+} from '../../test/fixtures/director.fixture';
+import {
+    Author
+} from '../../test/models/author.model';
+import {
+    AUTHOR_BIRTH,
+    AUTHOR_ID,
+    AUTHOR_NAME,
+    BOOK_TITLE,
+    getAuthorData,
+    getAuthorIncluded,
+    getAuthorsForEditorial
+} from '../../test/fixtures/author.fixture';
 import {
     BaseRequestOptions,
     ConnectionBackend,
@@ -25,12 +37,27 @@ import {
     Response,
     ResponseOptions
 } from '@angular/http';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {BASE_URL, Datastore} from '../../test/datastore.service';
-import {ErrorResponse} from '../models/error-response.model';
-import {getSampleBook} from '../../test/fixtures/book.fixture';
-import {Book} from '../../test/models/book.model';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+    HttpClient,
+    HttpHeaders
+} from '@angular/common/http';
+import {
+    BASE_URL,
+    Datastore
+} from '../../test/datastore.service';
+import {
+    ErrorResponse
+} from '../models/error-response.model';
+import {
+    getSampleBook
+} from '../../test/fixtures/book.fixture';
+import {
+    Book
+} from '../../test/models/book.model';
+import {
+    HttpClientTestingModule,
+    HttpTestingController
+} from '@angular/common/http/testing';
 
 let datastore: Datastore;
 let httpMock: HttpTestingController;
@@ -58,17 +85,33 @@ describe('JsonApiDatastore', () => {
     });
     describe('query related', () => {
         it('should get ralated models', () => {
-            datastore.findAllRelated(Editorial, EDITORIAL_ID, Author)
-            .subscribe((document) => {
-                expect(document).toBeDefined();
-                expect(document.getModels().length).toEqual(7);
-            });
+            datastore.findManyRelated(Editorial, EDITORIAL_ID, Author)
+                .subscribe((document) => {
+                    expect(document).toBeDefined();
+                    expect(document.getModels().length).toEqual(7);
+                });
 
             const req = httpMock.expectOne(BASE_URL + 'editorials/' + EDITORIAL_ID + '/authors');
             expect(req.request.method).toEqual('GET');
             expect(req.request.url).toEqual(BASE_URL + 'editorials/' + EDITORIAL_ID + '/authors');
             req.flush({
                 data: getAuthorsForEditorial()
+            });
+            httpMock.verify();
+        });
+
+        it('should get ralated model', () => {
+            datastore.findOneRelated(Editorial, EDITORIAL_ID, Director)
+                .subscribe((document) => {
+                    expect(document).toBeDefined();
+                    expect(document.getModels().length).toEqual(1);
+                });
+
+            const req = httpMock.expectOne(BASE_URL + 'editorials/' + EDITORIAL_ID + '/director');
+            expect(req.request.method).toEqual('GET');
+            expect(req.request.url).toEqual(BASE_URL + 'editorials/' + EDITORIAL_ID + '/director');
+            req.flush({
+                data: getDirectorForEditorial()
             });
             httpMock.verify();
         });

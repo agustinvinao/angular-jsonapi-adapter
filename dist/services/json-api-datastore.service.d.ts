@@ -17,6 +17,8 @@ export declare class JsonApiDatastore {
     constructor(httpClient: HttpClient);
     /** @deprecated - use findAll method to take all models **/
     query<T extends JsonApiModel>(modelType: ModelType<T>, params?: any, headers?: HttpHeaders): Observable<T[]>;
+    findManyRelated<T extends JsonApiModel>(modelType: ModelType<T>, id: string, relatedModelType: ModelType<any>, params?: any, headers?: HttpHeaders): Observable<JsonApiQueryData<T>>;
+    findOneRelated<T extends JsonApiModel>(modelType: ModelType<T>, id: string, relatedModelType: ModelType<any>, params?: any, headers?: HttpHeaders): Observable<JsonApiQueryData<T>>;
     findAll<T extends JsonApiModel>(modelType: ModelType<T>, params?: any, headers?: HttpHeaders): Observable<JsonApiQueryData<T>>;
     findRecord<T extends JsonApiModel>(modelType: ModelType<T>, id: string, params?: any, headers?: HttpHeaders): Observable<T>;
     createRecord<T extends JsonApiModel>(modelType: ModelType<T>, data?: any): T;
@@ -30,7 +32,7 @@ export declare class JsonApiDatastore {
     private isValidToManyRelation(objects);
     private isValidToOneRelation(objects);
     private buildSingleRelationshipData(model);
-    private extractQueryData<T>(res, modelType, withMeta?);
+    private extractQueryData<T>(res, modelType, withMeta?, relatedModelType?);
     private extractRecordData<T>(res, modelType, model?);
     protected parseMeta(body: any, modelType: ModelType<JsonApiModel>): any;
     private buildHeaders(customHeaders);
@@ -38,6 +40,6 @@ export declare class JsonApiDatastore {
     addToStore(modelOrModels: JsonApiModel | JsonApiModel[]): void;
     private resetMetadataAttributes<T>(res, attributesMetadata, modelType);
     private updateRelationships(model, relationships);
-    private buildUrl<T>(modelType, params?, id?);
+    private buildUrl<T>(modelType, params?, id?, modelTypeRelated?, modelTypeRelatedSingle?);
     protected handleError(error: any): ErrorObservable;
 }

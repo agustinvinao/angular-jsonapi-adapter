@@ -144,7 +144,14 @@ export class JsonApiModel {
     return relationshipList;
   }
 
-  private getHasOneRelationship<T extends JsonApiModel>(modelType: ModelType<T>, data: any, included: any, typeName: string, level: number, type_one: string): T {
+  private getHasOneRelationship<T extends JsonApiModel>(
+    modelType: ModelType<T>,
+    data: any,
+    included: any,
+    typeName: string,
+    level: number,
+    type_one: string
+  ): T {
     let id: string = data.id;
     let relationshipData: any = data;
     if (relationshipData) {

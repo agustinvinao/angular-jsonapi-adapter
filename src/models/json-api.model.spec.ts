@@ -22,7 +22,8 @@ describe('JsonApiModel', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: HttpClient, Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
+          provide: HttpClient, Http,
+          useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
             return new Http(backend, defaultOptions);
           }, deps: [MockBackend, BaseRequestOptions]
         },
