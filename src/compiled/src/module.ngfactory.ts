@@ -8,20 +8,26 @@
 
 import * as i0 from '@angular/core';
 import * as i1 from '../../module';
-import * as i2 from '@angular/http';
-import * as i3 from '../../services/json-api-datastore.service';
-import * as i4 from '@angular/common/http';
+import * as i2 from '@angular/common/http';
+import * as i3 from '@angular/common';
+import * as i4 from '../../services/json-api-datastore.service';
 export const JsonApiModuleNgFactory:i0.NgModuleFactory<i1.JsonApiModule> = i0.ɵcmf(i1.JsonApiModule,
     ([] as any[]),(_l:any) => {
       return i0.ɵmod([i0.ɵmpd(512,i0.ComponentFactoryResolver,i0.ɵCodegenComponentFactoryResolver,
           [[8,([] as any[])],[3,i0.ComponentFactoryResolver],i0.NgModuleRef]),i0.ɵmpd(4608,
-          i2.BrowserXhr,i2.BrowserXhr,([] as any[])),i0.ɵmpd(4608,i2.ResponseOptions,
-          i2.BaseResponseOptions,([] as any[])),i0.ɵmpd(5120,i2.XSRFStrategy,i2.ɵb,
-          ([] as any[])),i0.ɵmpd(4608,i2.XHRBackend,i2.XHRBackend,[i2.BrowserXhr,i2.ResponseOptions,
-          i2.XSRFStrategy]),i0.ɵmpd(4608,i2.RequestOptions,i2.BaseRequestOptions,([] as any[])),
-          i0.ɵmpd(5120,i2.Http,i2.ɵc,[i2.XHRBackend,i2.RequestOptions]),i0.ɵmpd(4608,
-              i3.JsonApiDatastore,i3.JsonApiDatastore,[i4.HttpClient]),i0.ɵmpd(512,
-              i2.HttpModule,i2.HttpModule,([] as any[])),i0.ɵmpd(512,i1.JsonApiModule,
-              i1.JsonApiModule,([] as any[]))]);
+          i2.HttpXsrfTokenExtractor,i2.ɵg,[i3.DOCUMENT,i0.PLATFORM_ID,i2.ɵe]),i0.ɵmpd(4608,
+          i2.ɵh,i2.ɵh,[i2.HttpXsrfTokenExtractor,i2.ɵf]),i0.ɵmpd(5120,i2.HTTP_INTERCEPTORS,
+          (p0_0:any) => {
+            return [p0_0];
+          },[i2.ɵh]),i0.ɵmpd(4608,i2.ɵd,i2.ɵd,([] as any[])),i0.ɵmpd(6144,i2.XhrFactory,
+          (null as any),[i2.ɵd]),i0.ɵmpd(4608,i2.HttpXhrBackend,i2.HttpXhrBackend,
+          [i2.XhrFactory]),i0.ɵmpd(6144,i2.HttpBackend,(null as any),[i2.HttpXhrBackend]),
+          i0.ɵmpd(5120,i2.HttpHandler,i2.ɵinterceptingHandler,[i2.HttpBackend,[2,i2.HTTP_INTERCEPTORS]]),
+          i0.ɵmpd(4608,i2.HttpClient,i2.HttpClient,[i2.HttpHandler]),i0.ɵmpd(4608,
+              i4.JsonApiDatastore,i4.JsonApiDatastore,[i2.HttpClient]),i0.ɵmpd(512,
+              i2.HttpClientXsrfModule,i2.HttpClientXsrfModule,([] as any[])),i0.ɵmpd(512,
+              i2.HttpClientModule,i2.HttpClientModule,([] as any[])),i0.ɵmpd(512,i1.JsonApiModule,
+              i1.JsonApiModule,([] as any[])),i0.ɵmpd(256,i2.ɵe,'XSRF-TOKEN',([] as any[])),
+          i0.ɵmpd(256,i2.ɵf,'X-XSRF-TOKEN',([] as any[]))]);
     });
-//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL1VzZXJzL2FndXN0aW52aW5hby9jb2RlL2FuZ3VsYXItanNvbmFwaS1hZGFwdGVyL3NyYy9tb2R1bGUubmdmYWN0b3J5LnRzIiwidmVyc2lvbiI6Mywic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibmc6Ly8vVXNlcnMvYWd1c3RpbnZpbmFvL2NvZGUvYW5ndWxhci1qc29uYXBpLWFkYXB0ZXIvc3JjL21vZHVsZS50cyJdLCJzb3VyY2VzQ29udGVudCI6WyIgIl0sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzsifQ==
+//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL1VzZXJzL2FndXN0aW52aW5hby9jb2RlL2FuZ3VsYXItanNvbmFwaS1hZGFwdGVyL3NyYy9tb2R1bGUubmdmYWN0b3J5LnRzIiwidmVyc2lvbiI6Mywic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibmc6Ly8vVXNlcnMvYWd1c3RpbnZpbmFvL2NvZGUvYW5ndWxhci1qc29uYXBpLWFkYXB0ZXIvc3JjL21vZHVsZS50cyJdLCJzb3VyY2VzQ29udGVudCI6WyIgIl0sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzsifQ==

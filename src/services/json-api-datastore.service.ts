@@ -47,12 +47,12 @@ export class JsonApiDatastore {
     }
 
     findOneRelated<T extends JsonApiModel>(
-        modelType: ModelType<T>,
-        id: string,
-        relatedModelType: ModelType<any>,
-        params?: any,
-        headers?: HttpHeaders
-    ): Observable<JsonApiQueryData<T>> {
+            modelType: ModelType<T>,
+            id: string,
+            relatedModelType: ModelType<any>,
+            params?: any,
+            headers?: HttpHeaders
+        ): Observable<JsonApiQueryData<T>> {
         const customHeadhers: HttpHeaders = this.buildHeaders(headers);
         let url: string = this.buildUrl(modelType, params, id, relatedModelType, true);
         return this.httpClient.get(url, {headers: customHeadhers})
