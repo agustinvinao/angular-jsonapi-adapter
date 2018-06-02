@@ -518,7 +518,7 @@ this.datastore.query(Post).subscribe(
 );
 ```
 
-It's also possible to handle errors for all requests by overriding `handleError(error: any): ErrorObservable` in the datastore.
+It's also possible to handle errors for all requests by overriding `handleError(error: any): ErrorObservable<T>` in the datastore.
 
 ### Dates
 
