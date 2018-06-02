@@ -10,11 +10,11 @@ export declare class JsonApiModel {
     save(params?: any, headers?: HttpHeaders): Observable<this>;
     readonly hasDirtyAttributes: boolean;
     rollbackAttributes(): void;
-    private parseHasMany(data, included, level);
-    private parseHasOne(data, included, level);
-    private parseBelongsTo(data, included, level);
-    private getHasManyRelationship<T>(modelType, data, included, typeName, level);
-    private getHasOneRelationship<T>(modelType, data, included, typeName, level, type_one);
-    private getBelongsToRelationship<T>(modelType, data, included, typeName, level);
-    private createOrPeek<T>(modelType, data);
+    private parseHasMany;
+    private parseHasOne;
+    private parseBelongsTo;
+    private getHasManyRelationship;
+    private getHasOneRelationship;
+    private getBelongsToRelationship;
+    private createOrPeek;
 }
