@@ -170,32 +170,16 @@ var JsonApiDatastore = /** @class */ (function () {
         }
         return relationShipData;
     };
-<<<<<<< HEAD
     JsonApiDatastore.prototype.extractQueryData = function (res, modelType, withMeta, relatedModelType, relatedModelTypeSingle) {
-||||||| merged common ancestors
-    JsonApiDatastore.prototype.extractQueryData = function (res, modelType, withMeta) {
-=======
-    JsonApiDatastore.prototype.extractQueryData = function (res, modelType, withMeta, relatedModelType) {
->>>>>>> Generic type 'ErrorObservable<T>' requires 1 type argument(s) fix
         var _this = this;
         if (withMeta === void 0) { withMeta = false; }
         var body = res;
         var models = [];
         var model;
-<<<<<<< HEAD
         if (relatedModelTypeSingle) {
             var _data = body.data;
             model = relatedModelType ? new relatedModelType(this, _data) : new modelType(this, _data);
             this.addToStore(model);
-||||||| merged common ancestors
-        body.data.map(function (_data) {
-            model = new modelType(_this, _data);
-            _this.addToStore(model);
-=======
-        body.data.map(function (_data) {
-            model = relatedModelType ? new relatedModelType(_this, _data) : new modelType(_this, _data);
-            _this.addToStore(model);
->>>>>>> Generic type 'ErrorObservable<T>' requires 1 type argument(s) fix
             if (body.included) {
                 model.syncRelationships(_data, body.included, 0);
                 this.addToStore(model);
@@ -312,17 +296,10 @@ var JsonApiDatastore = /** @class */ (function () {
         return model;
     };
     ;
-<<<<<<< HEAD
     JsonApiDatastore.prototype.buildUrl = function (modelType, params, id, modelTypeRelated, modelTypeRelatedSingle) {
-||||||| merged common ancestors
-    JsonApiDatastore.prototype.buildUrl = function (modelType, params, id) {
-=======
-    JsonApiDatastore.prototype.buildUrl = function (modelType, params, id, modelTypeRelated) {
->>>>>>> Generic type 'ErrorObservable<T>' requires 1 type argument(s) fix
         var typeName = Reflect.getMetadata('JsonApiModelConfig', modelType).type;
         var baseUrl = Reflect.getMetadata('JsonApiDatastoreConfig', this.constructor).baseUrl;
         var idToken = id ? "/" + id : null;
-<<<<<<< HEAD
         var typeNameRelated;
         if (modelTypeRelated) {
             if (modelTypeRelatedSingle) {
@@ -333,15 +310,6 @@ var JsonApiDatastore = /** @class */ (function () {
             }
         }
         return [baseUrl, typeName, idToken, (modelTypeRelated ? '/' + typeNameRelated : ''), (params ? '?' : ''), this.toQueryString(params)].join('');
-||||||| merged common ancestors
-        return [baseUrl, typeName, idToken, (params ? '?' : ''), this.toQueryString(params)].join('');
-=======
-        var typeOneNameRelated;
-        if (modelTypeRelated) {
-            typeOneNameRelated = Reflect.getMetadata('JsonApiModelConfig', modelTypeRelated).type;
-        }
-        return [baseUrl, typeName, idToken, (modelTypeRelated ? '/' + typeOneNameRelated : ''), (params ? '?' : ''), this.toQueryString(params)].join('');
->>>>>>> Generic type 'ErrorObservable<T>' requires 1 type argument(s) fix
     };
     JsonApiDatastore.prototype.handleError = function (error) {
         var errMsg = (error.message) ? error.message :
