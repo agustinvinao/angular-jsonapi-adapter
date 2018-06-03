@@ -2,16 +2,13 @@ import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import find from 'lodash-es/find';
-import {Observable} from 'rxjs/Observable';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { _throw } from 'rxjs/observable/throw';
+import {Observable} from 'rxjs';
 import {JsonApiModel} from '../models/json-api.model';
 import {ErrorResponse} from '../models/error-response.model';
 import {JsonApiQueryData} from '../models/json-api-query-data';
 import * as qs from 'qs';
-
+import { map, catchError } from 'rxjs/operators';
 export type ModelType<T extends JsonApiModel> = { new(datastore: JsonApiDatastore, data: any): T; };
 
 @Injectable()
@@ -28,8 +25,10 @@ export class JsonApiDatastore {
         const customHeadhers: HttpHeaders = this.buildHeaders(headers);
         let url: string = this.buildUrl(modelType, params);
         return this.httpClient.get(url, {headers: customHeadhers})
-            .map((res: any) => this.extractQueryData(res, modelType))
-            .catch((res: any) => this.handleError(res));
+            .pipe(
+                map((res: any) => this.extractQueryData(res, modelType)),
+                catchError((res: any) => this.handleError(res))
+            );
     }
 
     findManyRelated<T extends JsonApiModel>(
@@ -42,8 +41,10 @@ export class JsonApiDatastore {
             const customHeadhers: HttpHeaders = this.buildHeaders(headers);
             let url: string = this.buildUrl(modelType, params, id, relatedModelType, false);
             return this.httpClient.get(url, {headers: customHeadhers})
-                .map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType, false))
-                .catch((res: any) => this.handleError(res));
+                .pipe(
+                    map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType, false)),
+                    catchError((res: any) => this.handleError(res))
+                );
     }
 
     findOneRelated<T extends JsonApiModel>(
@@ -56,24 +57,30 @@ export class JsonApiDatastore {
         const customHeadhers: HttpHeaders = this.buildHeaders(headers);
         let url: string = this.buildUrl(modelType, params, id, relatedModelType, true);
         return this.httpClient.get(url, {headers: customHeadhers})
-            .map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType, true))
-            .catch((res: any) => this.handleError(res));
+            .pipe(
+                map((res: any) => this.extractQueryData(res, modelType, true, relatedModelType, true)),
+                catchError((res: any) => this.handleError(res))
+            );
     }
 
     findAll<T extends JsonApiModel>(modelType: ModelType<T>, params?: any, headers?: HttpHeaders): Observable<JsonApiQueryData<T>> {
         const customHeadhers: HttpHeaders = this.buildHeaders(headers);
         let url: string = this.buildUrl(modelType, params);
         return this.httpClient.get(url, {headers: customHeadhers})
-            .map((res: any) => this.extractQueryData(res, modelType, true))
-            .catch((res: any) => this.handleError(res));
+            .pipe(
+                map((res: any) => this.extractQueryData(res, modelType, true)),
+                catchError((res: any) => this.handleError(res))
+            );
     }
 
     findRecord<T extends JsonApiModel>(modelType: ModelType<T>, id: string, params?: any, headers?: HttpHeaders): Observable<T> {
         const customHeadhers: HttpHeaders = this.buildHeaders(headers);
         let url: string = this.buildUrl(modelType, params, id);
         return this.httpClient.get(url, {headers: customHeadhers})
-            .map((res: any) => this.extractRecordData(res, modelType))
-            .catch((res: any) => this.handleError(res));
+            .pipe(
+                map((res: any) => this.extractRecordData(res, modelType)),
+                catchError((res: any) => this.handleError(res))
+            );
     }
 
     createRecord<T extends JsonApiModel>(modelType: ModelType<T>, data?: any): T {
@@ -115,17 +122,24 @@ export class JsonApiDatastore {
             httpCall = this.httpClient.post(url, body, {headers: customHeadhers});
         }
         return httpCall
-            .map((res: any) => this.extractRecordData(res, modelType, model))
-            .map((res: any) => this.resetMetadataAttributes(res, attributesMetadata, modelType))
-            .map((res: any) => this.updateRelationships(res, relationships))
-            .catch((res: any) => this.handleError(res));
+            .pipe(
+                map((res: any) => {
+                    this.extractRecordData(res, modelType, model),
+                    this.resetMetadataAttributes(res, attributesMetadata, modelType),
+                    this.updateRelationships(res, relationships)
+                }),
+                catchError((res: any) => this.handleError(res))
+            );
     }
 
     deleteRecord<T extends JsonApiModel>(modelType: ModelType<T>, id: string, headers?: HttpHeaders): Observable<Response> {
         const customHeadhers: HttpHeaders = this.buildHeaders(headers);
         let url: string = this.buildUrl(modelType, null, id);
-        return this.httpClient.delete(url, {headers: customHeadhers})
-            .catch((res: any) => this.handleError(res));
+        return this.httpClient
+            .delete(url, {headers: customHeadhers})
+            .pipe(
+                catchError((res: any) => this.handleError(res))
+            );
     }
 
     peekRecord<T extends JsonApiModel>(modelType: ModelType<T>, id: string): T {
@@ -346,7 +360,7 @@ export class JsonApiDatastore {
             return [baseUrl, typeName, idToken, (modelTypeRelated ? '/' + typeNameRelated : ''), (params ? '?' : ''), this.toQueryString(params)].join('');
     }
 
-    protected handleError(error: any): ErrorObservable {
+    protected handleError(error: any): Observable<any> {
         let errMsg: string = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         try {
@@ -354,13 +368,13 @@ export class JsonApiDatastore {
             if (body.errors && body.errors instanceof Array) {
                 let errors: ErrorResponse = new ErrorResponse(body.errors);
                 console.error(errMsg, errors);
-                return Observable.throw(errors);
+                return _throw(errors);
             }
         } catch (e) {
             // no valid JSON
         }
 
         console.error(errMsg);
-        return Observable.throw(errMsg);
+        return _throw(errMsg);
     }
 }
