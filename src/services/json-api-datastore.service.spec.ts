@@ -271,7 +271,7 @@ describe('JsonApiDatastore', () => {
         });
 
         it('should fire error', () => {
-            datastore.query(Author).subscribe((authors) =>
+            datastore.findAll(Author).subscribe((authors) =>
                 fail('onNext has been called'),
                 (response) => expect(response).toMatch(/500 Server Error/),
                 () => fail('onCompleted has been called'));
