@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Injectable} from '@angular/core';
+import { Headers, Http, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import find from 'lodash-es/find';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -30,6 +30,10 @@ export class JsonApiDatastore {
                 map((res: any) => this.extractQueryData(res, modelType)),
                 catchError((res: any) => this.handleError(res))
             );
+            // .subscribe(
+            //     data => this.extractQueryData(res, modelType)),
+            //     (res: any) => this.handleError(res)
+            // );
     }
 
     findManyRelated<T extends JsonApiModel>(

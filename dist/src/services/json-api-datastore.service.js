@@ -24,6 +24,10 @@ var JsonApiDatastore = /** @class */ (function () {
         return this.http
             .get(url, { headers: customHeadhers })
             .pipe(operators_1.map(function (res) { return _this.extractQueryData(res, modelType); }), operators_1.catchError(function (res) { return _this.handleError(res); }));
+        // .subscribe(
+        //     data => this.extractQueryData(res, modelType)),
+        //     (res: any) => this.handleError(res)
+        // );
     };
     JsonApiDatastore.prototype.findManyRelated = function (modelType, id, relatedModelType, params, headers) {
         var _this = this;

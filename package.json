@@ -1,6 +1,6 @@
 {
   "name": "angular-jsonapi-adapter",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "angular2/4 JSONAPI adapter. It is responsible for transforming the store's requests into HTTP requests that follow the JSON API format.",
   "scripts": {
     "build": "rimraf dist src/compiled && tslint src/**/*.ts && ngc",
@@ -36,7 +36,8 @@
     "@types/qs": "^6.5.1",
     "date-fns": "^1.29.0",
     "lodash-es": "^4.17.10",
-    "qs": "^6.5.2"
+    "qs": "^6.5.2",
+    "rxjs-compat": "^6.2.0"
   },
   "peerDependencies": {
     "@angular/http": "^6.0.3",
@@ -78,7 +79,7 @@
     "rxjs": "6.2.0",
     "sourcemap-istanbul-instrumenter-loader": "^0.2.0",
     "ts-loader": "^2.3.7",
-    "tslint": "^5.10.0",
+    "tslint": "^5.0.0",
     "typescript": "2.7.2",
     "webpack": "2.3.3",
     "zone.js": "^0.8.26"
