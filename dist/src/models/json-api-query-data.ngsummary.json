@@ -1,0 +1,1 @@
+{"moduleName":null,"summaries":[{"symbol":{"__symbol":0,"members":[]},"metadata":{"__symbolic":"class","arity":1,"members":{"__ctor__":[{"__symbolic":"constructor","parameters":[null,null]}],"getModels":[{"__symbolic":"method"}],"getMeta":[{"__symbolic":"method"}]}}}],"symbols":[{"__symbol":0,"name":"JsonApiQueryData","filePath":"./json-api-query-data"}]}

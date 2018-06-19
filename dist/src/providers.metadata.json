@@ -1,0 +1,1 @@
+[{"__symbolic":"module","version":4,"metadata":{"PROVIDERS":[{"__symbolic":"reference","module":"./services/json-api-datastore.service","name":"JsonApiDatastore","line":5,"character":2}]},"exports":[{"from":"./services/json-api-datastore.service"}]}]
