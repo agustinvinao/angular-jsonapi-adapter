@@ -19,7 +19,9 @@
       "jasmine",
       "selenium-webdriver",
       "lodash",
-      "reflect-metadata"
+      "node",
+      "reflect-metadata",
+      "sprintf-js"
     ]
   },
   "files": [
