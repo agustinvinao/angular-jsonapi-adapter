@@ -59,6 +59,7 @@ import {
     HttpClientTestingModule,
     HttpTestingController
 } from '@angular/common/http/testing';
+import { JsonApiQueryData } from '../models/json-api-query-data';
 
 let datastore: Datastore;
 let httpMock: HttpTestingController;
@@ -87,7 +88,7 @@ describe('JsonApiDatastore', () => {
     describe('query related', () => {
         it('should get ralated models', () => {
             datastore.findManyRelated(Editorial, EDITORIAL_ID, Author)
-                .subscribe((document) => {
+                .subscribe((document: JsonApiQueryData<any>) => {
                     expect(document).toBeDefined();
                     expect(document.getModels().length).toEqual(7);
                 });
@@ -103,10 +104,9 @@ describe('JsonApiDatastore', () => {
 
         it('should get ralated model', () => {
             datastore.findOneRelated(Editorial, EDITORIAL_ID, Director)
-                .subscribe((document) => {
+                .subscribe((document: JsonApiQueryData<any>) => {
                     expect(document).toBeDefined();
                     expect(document.getModels().length).toEqual(1);
-                    console.log('document.getModels(): ', document.getModels())
                     expect(document.getModels()[0]['name']).toEqual(DIRECTOR_NAME);
                 });
                 // TODO: Is not testing the data parsing with extractQueryData inside the method
@@ -123,7 +123,7 @@ describe('JsonApiDatastore', () => {
 
     describe('query', () => {
         it('should build basic url', () => {
-            datastore.query(Author).subscribe(response => expect(response[0] instanceof Author).toBeTruthy());
+            datastore.query(Author).subscribe((response: Author[]) => expect(response[0] instanceof Author).toBeTruthy());
             const req = httpMock.expectOne(BASE_URL + 'authors');
             expect(req.request.method).toEqual('GET');
             expect(req.request.url).toEqual(BASE_URL + 'authors');
@@ -132,7 +132,7 @@ describe('JsonApiDatastore', () => {
         });
 
         it('should set JSON API headers', () => {
-            datastore.query(Author).subscribe(response => expect(response[0] instanceof Author).toBeTruthy());
+            datastore.query(Author).subscribe((response: Author[]) => expect(response[0] instanceof Author).toBeTruthy());
             const req = httpMock.expectOne(BASE_URL + 'authors');
             expect(req.request.method).toEqual('GET');
             expect(req.request.url).toEqual(BASE_URL + 'authors');
@@ -198,7 +198,7 @@ describe('JsonApiDatastore', () => {
         });
 
         it('should get authors', () => {
-            datastore.query(Author).subscribe((authors) => {
+            datastore.query(Author).subscribe((authors: Array<any>) => {
                 expect(authors).toBeDefined();
                 expect(authors.length).toEqual(1);
                 expect(authors[0].id).toEqual(AUTHOR_ID);
@@ -213,7 +213,7 @@ describe('JsonApiDatastore', () => {
         });
 
         it('should get authors with custom metadata', () => {
-            datastore.findAll(Author).subscribe((document) => {
+            datastore.findAll(Author).subscribe((document: JsonApiQueryData<any>) => {
                 expect(document).toBeDefined();
                 expect(document.getModels().length).toEqual(1);
                 expect(document.getMeta().meta.page.number).toEqual(1);
@@ -237,7 +237,7 @@ describe('JsonApiDatastore', () => {
         });
 
         it('should get data with default metadata', () => {
-            datastore.findAll(Book).subscribe((document) => {
+            datastore.findAll(Book).subscribe((document: JsonApiQueryData<any>) => {
                 expect(document).toBeDefined();
                 expect(document.getModels().length).toEqual(1);
                 expect(document.getMeta().links[0]).toEqual('http://www.example.org');
@@ -252,7 +252,7 @@ describe('JsonApiDatastore', () => {
         });
 
         it('should get models relationships', () => {
-            datastore.findAll(Book).subscribe((document) => {
+            datastore.findAll(Book).subscribe((document: JsonApiQueryData<any>) => {
                 expect(document).toBeDefined();
                 expect(document.getModels().length).toEqual(1);
                 expect(document.getMeta().links[0]).toEqual('http://www.example.org');
@@ -315,7 +315,7 @@ describe('JsonApiDatastore', () => {
 
     describe('findRecord', () => {
         it('should get author', () => {
-            datastore.findRecord(Author, '1').subscribe((author) => {
+            datastore.findRecord(Author, '1').subscribe((author: Author) => {
                 expect(author).toBeDefined();
                 expect(author.id).toBe(AUTHOR_ID);
                 expect(author.date_of_birth).toEqual(dateParse(AUTHOR_BIRTH));
@@ -327,7 +327,7 @@ describe('JsonApiDatastore', () => {
         });
 
         it('should get editorial with hasOne relation author', () => {
-            datastore.findRecord(Editorial, EDITORIAL_ID).subscribe((editorial) => {
+            datastore.findRecord(Editorial, EDITORIAL_ID).subscribe((editorial: Editorial) => {
                 // console.log('%c editorial: ', 'background-color: red; color: white;', editorial);
                 expect(editorial).toBeDefined();
                 expect(editorial.authors).toBeDefined();

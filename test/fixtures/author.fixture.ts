@@ -13,205 +13,205 @@ export const CHAPTER_TITLE = 'The Return Journey';
 
 export function getAuthorsForEditorial(editorialId?: number) {
   return [
-      {
-        'id': '119',
-        'type': 'authors',
-        'links': {
-          'self': '/authors/119'
-        },
-        'attributes': {
-          'name': 'Rashad Herzog Sr.',
-          'date-of-birth': '1954-06-19',
-          'date-of-death': '1977-06-19',
-          'updated-at': '2017-09-29T19:38:25.654Z',
-          'created-at': '2017-09-29T19:38:25.654Z'
-        },
-        'relationships': {
-          'editorial': {
-            'links': {
-              'self': '/authors/119/relationships/editorial',
-              'related': '/authors/119/editorial'
-            }
-          },
-          'books': {
-            'links': {
-              'self': '/authors/119/relationships/books',
-              'related': '/authors/119/books'
-            }
-          }
-        }
+    {
+      'id': '119',
+      'type': 'authors',
+      'links': {
+        'self': '/authors/119'
       },
-      {
-        'id': '120',
-        'type': 'authors',
-        'links': {
-          'self': '/authors/120'
-        },
-        'attributes': {
-          'name': 'Alanis Runolfsdottir',
-          'date-of-birth': '1983-08-25',
-          'date-of-death': '1986-08-25',
-          'updated-at': '2017-09-29T19:38:25.753Z',
-          'created-at': '2017-09-29T19:38:25.753Z'
-        },
-        'relationships': {
-          'editorial': {
-            'links': {
-              'self': '/authors/120/relationships/editorial',
-              'related': '/authors/120/editorial'
-            }
-          },
-          'books': {
-            'links': {
-              'self': '/authors/120/relationships/books',
-              'related': '/authors/120/books'
-            }
-          }
-        }
+      'attributes': {
+        'name': 'Rashad Herzog Sr.',
+        'date-of-birth': '1954-06-19',
+        'date-of-death': '1977-06-19',
+        'updated-at': '2017-09-29T19:38:25.654Z',
+        'created-at': '2017-09-29T19:38:25.654Z'
       },
-      {
-        'id': '121',
-        'type': 'authors',
-        'links': {
-          'self': '/authors/121'
-        },
-        'attributes': {
-          'name': 'Wanda Gutkowski',
-          'date-of-birth': '1993-09-02',
-          'date-of-death': '1998-09-02',
-          'updated-at': '2017-09-29T19:38:25.777Z',
-          'created-at': '2017-09-29T19:38:25.777Z'
-        },
-        'relationships': {
-          'editorial': {
-            'links': {
-              'self': '/authors/121/relationships/editorial',
-              'related': '/authors/121/editorial'
-            }
-          },
-          'books': {
-            'links': {
-              'self': '/authors/121/relationships/books',
-              'related': '/authors/121/books'
-            }
+      'relationships': {
+        'editorial': {
+          'links': {
+            'self': '/authors/119/relationships/editorial',
+            'related': '/authors/119/editorial'
           }
-        }
-      },
-      {
-        'id': '122',
-        'type': 'authors',
-        'links': {
-          'self': '/authors/122'
         },
-        'attributes': {
-          'name': 'Alberto Swaniawski',
-          'date-of-birth': '1952-11-12',
-          'date-of-death': '1966-11-12',
-          'updated-at': '2017-09-29T19:38:25.874Z',
-          'created-at': '2017-09-29T19:38:25.874Z'
-        },
-        'relationships': {
-          'editorial': {
-            'links': {
-              'self': '/authors/122/relationships/editorial',
-              'related': '/authors/122/editorial'
-            }
-          },
-          'books': {
-            'links': {
-              'self': '/authors/122/relationships/books',
-              'related': '/authors/122/books'
-            }
-          }
-        }
-      },
-      {
-        'id': '123',
-        'type': 'authors',
-        'links': {
-          'self': '/authors/123'
-        },
-        'attributes': {
-          'name': 'Filiberto Tremblay DVM',
-          'date-of-birth': '1958-09-10',
-          'date-of-death': '1963-09-10',
-          'updated-at': '2017-09-29T19:38:25.957Z',
-          'created-at': '2017-09-29T19:38:25.957Z'
-        },
-        'relationships': {
-          'editorial': {
-            'links': {
-              'self': '/authors/123/relationships/editorial',
-              'related': '/authors/123/editorial'
-            }
-          },
-          'books': {
-            'links': {
-              'self': '/authors/123/relationships/books',
-              'related': '/authors/123/books'
-            }
-          }
-        }
-      },
-      {
-        'id': '124',
-        'type': 'authors',
-        'links': {
-          'self': '/authors/124'
-        },
-        'attributes': {
-          'name': 'Bernard Beer',
-          'date-of-birth': '1965-03-31',
-          'date-of-death': '1975-03-31',
-          'updated-at': '2017-09-29T19:38:26.073Z',
-          'created-at': '2017-09-29T19:38:26.073Z'
-        },
-        'relationships': {
-          'editorial': {
-            'links': {
-              'self': '/authors/124/relationships/editorial',
-              'related': '/authors/124/editorial'
-            }
-          },
-          'books': {
-            'links': {
-              'self': '/authors/124/relationships/books',
-              'related': '/authors/124/books'
-            }
-          }
-        }
-      },
-      {
-        'id': '125',
-        'type': 'authors',
-        'links': {
-          'self': '/authors/125'
-        },
-        'attributes': {
-          'name': 'Ms. Hope Little',
-          'date-of-birth': '1991-01-21',
-          'date-of-death': '2009-01-21',
-          'updated-at': '2017-09-29T19:38:26.140Z',
-          'created-at': '2017-09-29T19:38:26.140Z'
-        },
-        'relationships': {
-          'editorial': {
-            'links': {
-              'self': '/authors/125/relationships/editorial',
-              'related': '/authors/125/editorial'
-            }
-          },
-          'books': {
-            'links': {
-              'self': '/authors/125/relationships/books',
-              'related': '/authors/125/books'
-            }
+        'books': {
+          'links': {
+            'self': '/authors/119/relationships/books',
+            'related': '/authors/119/books'
           }
         }
       }
-    ]
-  }
+    },
+    {
+      'id': '120',
+      'type': 'authors',
+      'links': {
+        'self': '/authors/120'
+      },
+      'attributes': {
+        'name': 'Alanis Runolfsdottir',
+        'date-of-birth': '1983-08-25',
+        'date-of-death': '1986-08-25',
+        'updated-at': '2017-09-29T19:38:25.753Z',
+        'created-at': '2017-09-29T19:38:25.753Z'
+      },
+      'relationships': {
+        'editorial': {
+          'links': {
+            'self': '/authors/120/relationships/editorial',
+            'related': '/authors/120/editorial'
+          }
+        },
+        'books': {
+          'links': {
+            'self': '/authors/120/relationships/books',
+            'related': '/authors/120/books'
+          }
+        }
+      }
+    },
+    {
+      'id': '121',
+      'type': 'authors',
+      'links': {
+        'self': '/authors/121'
+      },
+      'attributes': {
+        'name': 'Wanda Gutkowski',
+        'date-of-birth': '1993-09-02',
+        'date-of-death': '1998-09-02',
+        'updated-at': '2017-09-29T19:38:25.777Z',
+        'created-at': '2017-09-29T19:38:25.777Z'
+      },
+      'relationships': {
+        'editorial': {
+          'links': {
+            'self': '/authors/121/relationships/editorial',
+            'related': '/authors/121/editorial'
+          }
+        },
+        'books': {
+          'links': {
+            'self': '/authors/121/relationships/books',
+            'related': '/authors/121/books'
+          }
+        }
+      }
+    },
+    {
+      'id': '122',
+      'type': 'authors',
+      'links': {
+        'self': '/authors/122'
+      },
+      'attributes': {
+        'name': 'Alberto Swaniawski',
+        'date-of-birth': '1952-11-12',
+        'date-of-death': '1966-11-12',
+        'updated-at': '2017-09-29T19:38:25.874Z',
+        'created-at': '2017-09-29T19:38:25.874Z'
+      },
+      'relationships': {
+        'editorial': {
+          'links': {
+            'self': '/authors/122/relationships/editorial',
+            'related': '/authors/122/editorial'
+          }
+        },
+        'books': {
+          'links': {
+            'self': '/authors/122/relationships/books',
+            'related': '/authors/122/books'
+          }
+        }
+      }
+    },
+    {
+      'id': '123',
+      'type': 'authors',
+      'links': {
+        'self': '/authors/123'
+      },
+      'attributes': {
+        'name': 'Filiberto Tremblay DVM',
+        'date-of-birth': '1958-09-10',
+        'date-of-death': '1963-09-10',
+        'updated-at': '2017-09-29T19:38:25.957Z',
+        'created-at': '2017-09-29T19:38:25.957Z'
+      },
+      'relationships': {
+        'editorial': {
+          'links': {
+            'self': '/authors/123/relationships/editorial',
+            'related': '/authors/123/editorial'
+          }
+        },
+        'books': {
+          'links': {
+            'self': '/authors/123/relationships/books',
+            'related': '/authors/123/books'
+          }
+        }
+      }
+    },
+    {
+      'id': '124',
+      'type': 'authors',
+      'links': {
+        'self': '/authors/124'
+      },
+      'attributes': {
+        'name': 'Bernard Beer',
+        'date-of-birth': '1965-03-31',
+        'date-of-death': '1975-03-31',
+        'updated-at': '2017-09-29T19:38:26.073Z',
+        'created-at': '2017-09-29T19:38:26.073Z'
+      },
+      'relationships': {
+        'editorial': {
+          'links': {
+            'self': '/authors/124/relationships/editorial',
+            'related': '/authors/124/editorial'
+          }
+        },
+        'books': {
+          'links': {
+            'self': '/authors/124/relationships/books',
+            'related': '/authors/124/books'
+          }
+        }
+      }
+    },
+    {
+      'id': '125',
+      'type': 'authors',
+      'links': {
+        'self': '/authors/125'
+      },
+      'attributes': {
+        'name': 'Ms. Hope Little',
+        'date-of-birth': '1991-01-21',
+        'date-of-death': '2009-01-21',
+        'updated-at': '2017-09-29T19:38:26.140Z',
+        'created-at': '2017-09-29T19:38:26.140Z'
+      },
+      'relationships': {
+        'editorial': {
+          'links': {
+            'self': '/authors/125/relationships/editorial',
+            'related': '/authors/125/editorial'
+          }
+        },
+        'books': {
+          'links': {
+            'self': '/authors/125/relationships/books',
+            'related': '/authors/125/books'
+          }
+        }
+      }
+    }
+  ]
 }
+
 
 export function getAuthorData(relationship?: string, total?: number): any {
   let response: any = {
